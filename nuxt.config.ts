@@ -8,12 +8,19 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@nuxt/eslint", "@nuxt/icon", "@nuxtjs/color-mode"],
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/icon",
+    "@nuxtjs/color-mode",
+  ],
+  runtimeConfig: {
+  },
   eslint: {
     config: {
       standalone: false,
     },
   },
+
   colorMode: {
     dataValue: "theme",
   },
