@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
+  typescript: {
+    nodeTsConfig: {
+      compilerOptions: {
+        types: ["node"],
+      },
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -14,13 +21,15 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
   ],
   runtimeConfig: {
+    nodeEnv: "",
+    tursoDatabaseUrl: "",
+    tursoAuthToken: "",
   },
   eslint: {
     config: {
       standalone: false,
     },
   },
-
   colorMode: {
     dataValue: "theme",
   },
