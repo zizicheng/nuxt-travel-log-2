@@ -1,12 +1,14 @@
 import { z } from "zod";
 
-const envSchema = z.object({
-  NODE_ENV: z.string(),
+const EnvSchema = z.object({
+  NUXT_NODE_ENV: z.string(),
+  NUXT_TURSO_DATABASE_URL: z.string().min(1, "NUXT_TURSO_DATABASE_URL is required"),
+  NUXT_TURSO_AUTH_TOKEN: z.string().min(1, "NUXT_TURSO_AUTH_TOKEN is required"),
 });
 
 export default defineNitroPlugin(() => {
   // eslint-disable-next-line node/no-process-env
-  const result = envSchema.safeParse(process.env);
+  const result = EnvSchema.safeParse(process.env);
   if (!result.success) {
     const fieldErrors = result.error.issues.map(
       issue => `${issue.path.join(".")}: ${issue.message}`,
