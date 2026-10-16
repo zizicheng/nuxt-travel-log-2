@@ -9,11 +9,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment: Build
-    env:
-      NUXT_NODE_ENV: development
-      NUXT_TURSO_DATABASE_URL: ${{ secrets.NUXT_TURSO_DATABASE_URL }}
-      NUXT_TURSO_AUTH_TOKEN: ${{ secrets.NUXT_TURSO_AUTH_TOKEN }}
 
     steps:
       - uses: actions/checkout@v5

@@ -1,6 +1,8 @@
-import { int, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, real, snakeCase, text } from "drizzle-orm/sqlite-core";
 
-export const location = sqliteTable(
+import { user } from "./auth";
+
+export const location = snakeCase.table(
   "location",
   {
     id: int().primaryKey({ autoIncrement: true }),
@@ -8,7 +10,8 @@ export const location = sqliteTable(
     slug: text().notNull().unique(),
     description: text(),
     lat: real().notNull(),
-    lng: real().notNull(),
+    long: real().notNull(),
+    userId: int().notNull().references(() => user.id),
     createdAt: int().notNull().$default(() => Date.now()),
     updatedAt: int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now()),
   },
