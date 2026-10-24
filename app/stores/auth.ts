@@ -7,9 +7,9 @@ export const useAuthStore = defineStore("useAuthStore", () => {
   async function init() {
     const data = await authClient.useSession(useFetch);
     console.log("[auth] server:", import.meta.server);
-    console.log("[auth] data:", result.data.value);
-    console.log("[auth] error:", result.error.value);
-    console.log("[auth] pending:", result.isPending.value);
+    console.log("[auth] data:", data.data.value);
+    console.log("[auth] error:", data.error.value);
+    console.log("[auth] pending:", data.isPending);
     session.value = data;
   }
 
