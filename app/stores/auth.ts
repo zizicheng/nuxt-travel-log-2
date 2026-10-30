@@ -5,7 +5,6 @@ const authClient = createAuthClient({
     ? window.location.origin
     // eslint-disable-next-line node/no-process-env
     : (process.env.BETTER_AUTH_URL || "https://nuxt-travel-log-2.vercel.app"),
-
 });
 
 export const useAuthStore = defineStore("useAuthStore", () => {
@@ -22,10 +21,10 @@ export const useAuthStore = defineStore("useAuthStore", () => {
     });
     session.value = data;
   }
-
+                                        
   const user = computed(() => session.value?.data?.user);
   const loading = computed(() => session.value?.isPending);
-
+                                       
   async function signIn() {
     await authClient.signIn.social({
       provider: "github",
