@@ -1,8 +1,14 @@
+import type { User } from "better-auth";
+
 import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
 import { betterAuth } from "better-auth/minimal";
 
 import db from "./db/index";
 import * as schema from "./db/schema/auth";
+
+export type UserWithId = Omit<User, "id"> & {
+  id: number;
+};
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
