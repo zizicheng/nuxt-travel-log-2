@@ -1,7 +1,7 @@
 {
   "version": "7",
   "dialect": "sqlite",
-  "id": "00bf47ef-68ed-4937-b385-982dadfc6884",
+  "id": "c3b7cefb-caab-43ef-9d86-e7578d4d4da1",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -65,7 +65,7 @@
       "table": "account"
     },
     {
-      "type": "text",
+      "type": "integer",
       "notNull": true,
       "autoincrement": false,
       "default": null,
@@ -235,7 +235,7 @@
       "table": "session"
     },
     {
-      "type": "text",
+      "type": "integer",
       "notNull": true,
       "autoincrement": false,
       "default": null,
@@ -843,6 +843,16 @@
       "name": "verification_identifier_idx",
       "entityType": "indexes",
       "table": "verification"
+    },
+    {
+      "columns": [
+        "name",
+        "user_id"
+      ],
+      "nameExplicit": false,
+      "name": "location_name_user_id_unique",
+      "entityType": "uniques",
+      "table": "location"
     },
     {
       "columns": [
