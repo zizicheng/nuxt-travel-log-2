@@ -2,7 +2,7 @@ CREATE TABLE `account` (
 	`id` integer PRIMARY KEY AUTOINCREMENT,
 	`account_id` text NOT NULL,
 	`provider_id` text NOT NULL,
-	`user_id` text NOT NULL,
+	`user_id` integer NOT NULL,
 	`access_token` text,
 	`refresh_token` text,
 	`id_token` text,
@@ -23,7 +23,7 @@ CREATE TABLE `session` (
 	`updated_at` integer NOT NULL,
 	`ip_address` text,
 	`user_agent` text,
-	`user_id` text NOT NULL,
+	`user_id` integer NOT NULL,
 	CONSTRAINT `fk_session_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
 );
 --> statement-breakpoint
@@ -56,7 +56,8 @@ CREATE TABLE `location` (
 	`user_id` integer NOT NULL,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
-	CONSTRAINT `fk_location_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+	CONSTRAINT `fk_location_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
+	CONSTRAINT `location_name_user_id_unique` UNIQUE(`name`,`user_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `locationLog` (
