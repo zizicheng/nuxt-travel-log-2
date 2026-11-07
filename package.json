@@ -25,7 +25,7 @@
     "@vee-validate/zod": "^4.15.1",
     "better-auth": "^1.7.12",
     "concurrently": "^10.0.6",
-    "drizzle-orm": "1.0.0-rc.4",
+    "drizzle-orm": "1.0.0-rc.5",
     "eslint": "^10.9.1",
     "nanoid": "^6.0.2",
     "nuxt": "^4.5.2",
@@ -44,7 +44,7 @@
     "@types/slug": "^5.0.9",
     "daisyui": "^5.7.22",
     "dotenv": "^18.0.5",
-    "drizzle-kit": "1.0.0-rc.4",
+    "drizzle-kit": "1.0.0-rc.5",
     "eslint-plugin-format": "^2.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^17.4.1"

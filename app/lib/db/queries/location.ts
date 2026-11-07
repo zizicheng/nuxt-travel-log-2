@@ -1,0 +1,51 @@
+import { customAlphabet } from "nanoid";
+
+import type { InsertLocation } from "../schema/location";
+
+import db from "..";
+import { location } from "../schema";
+
+const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 5);
+
+export async function findLocationByName(existing: InsertLocation, userId: number) {
+  return db.query.location.findFirst({
+    where: {
+      name: existing.name,
+      userId,
+    },
+  });
+}
+
+export async function findLocationBySlug(slug: string) {
+  return db.query.location.findFirst({
+    where: {
+      slug,
+    },
+  });
+}
+
+export async function findUniqueSlug(slug: string) {
+  let existing = !!(await findLocationBySlug(slug));
+  while (existing) {
+    const id = nanoid();
+    const idSlug = `${slug}-${id}`;
+    existing = !!(await findLocationBySlug(idSlug));
+    if (!existing) {
+      return idSlug;
+    }
+  }
+  return slug;
+}
+
+export async function insertLocation(
+  insertTable: InsertLocation,
+  slug: string,
+  userId: number,
+) {
+  const [created] = await db.insert(location).values({
+    ...insertTable,
+    slug,
+    userId,
+  }).returning();
+  return created;
+}
