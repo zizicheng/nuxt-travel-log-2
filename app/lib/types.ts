@@ -1,9 +1,10 @@
 export type LatLongItem = {
   lat: number;
   long: number;
+  description: string | null;
 };
 
 export type MapPoint = {
   id: number;
-  label: string;
+  name: string;
 } & LatLongItem;
