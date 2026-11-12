@@ -109,7 +109,7 @@ onBeforeRouteLeave(() => {
           <span v-if="loading" class="loading loading-spinner loading-sm" />
           <Icon
             v-else
-            name="tabler:circle-plus-filled"
+            name="i-tabler:circle-plus-filled"
             size="24"
           />
         </button>

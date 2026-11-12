@@ -4,18 +4,34 @@ export const useLocationStore = defineStore("useLocationStore", () => {
   });
 
   const sidebarStore = useSidebarStore();
+  const mapStore = useMapStore();
 
-  watchEffect(() => {
-    if (data.value) {
-      sidebarStore.sidebarItems = data.value.map(location => ({
-        id: `location-${location.id}`,
-        label: location.name,
-        icon: "i-tabler:map-pin-filled",
-        href: "#",
-      }));
-    }
-    sidebarStore.loading = status.value === "pending";
-  });
+  watch(
+    [data, status],
+    ([locations, currentStatus]) => {
+      if (locations) {
+        sidebarStore.sidebarItems = locations.map(location => ({
+          id: `location-${location.id}`,
+          label: location.name,
+          icon: "i-tabler:map-pin-filled",
+          href: "#",
+        }));
+
+        mapStore.mapPoints = locations.map(location => ({
+          id: location.id,
+          label: location.name,
+          lat: location.lat,
+          long: location.long,
+        }));
+      }
+
+      sidebarStore.loading = currentStatus === "pending";
+    },
+    {
+      immediate: true,
+      flush: "sync",
+    },
+  );
 
   return {
     locations: data,
