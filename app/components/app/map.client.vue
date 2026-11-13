@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { LngLat } from "maplibre-gl";
+
 import { MglMap, MglMarker, MglNavigationControl, MglPopup } from "@indoorequal/vue-maplibre-gl";
 import { setWorkerUrl } from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
@@ -16,6 +18,13 @@ const style = computed(() =>
     : "https://tiles.openfreemap.org/styles/liberty");
 const zoom = 3;
 
+function updateAddedPoint(location: LngLat) {
+  if (mapStore.addedPoint) {
+    mapStore.addedPoint.lat = location.lat;
+    mapStore.addedPoint.long = location.lng;
+  }
+};
+
 onMounted(() => {
   mapStore.init(); ;
 });
@@ -29,6 +38,25 @@ onMounted(() => {
   >
     <MglNavigationControl />
     <MglMarker
+      v-if="mapStore.addedPoint"
+      draggable
+      :coordinates="CENTER_USA"
+      @update:coordinates="updateAddedPoint"
+    >
+      <template #marker>
+        <div
+          class="tooltip tooltip-top tooltip-open hover:cursor-pointer"
+          data-tip="Drag to your desired location"
+        >
+          <Icon
+            name="tabler:map-pin-filled"
+            size="35"
+            class="text-warning"
+          />
+        </div>
+      </template>
+    </MglMarker>
+    <MglMarker
       v-for="point in mapStore.mapPoints"
       :key="point.id"
       :coordinates="[point.long, point.lat]"
@@ -38,7 +66,7 @@ onMounted(() => {
           class="tooltip tooltip-top"
           :data-tip="point.name"
           :class="{ 'tooltip-open': mapStore.selectedPoint === point }"
-          @mouseenter="mapStore.selectPointWithoutFlyTo(point)"
+          @mouseenter="mapStore.selectedPoint = point"
           @mouseleave="mapStore.selectedPoint = null"
         >
           <Icon
