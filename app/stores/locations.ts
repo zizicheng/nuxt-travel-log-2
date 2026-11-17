@@ -14,7 +14,9 @@ export const useLocationStore = defineStore("useLocationStore", () => {
           id: `location-${location.id}`,
           label: location.name,
           icon: "i-tabler:map-pin-filled",
-          href: "#",
+          to: { name: "dashboard-location-slug", params: {
+            slug: location.slug,
+          } },
           location,
         }));
 

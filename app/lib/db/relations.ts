@@ -1,13 +1,20 @@
 import { defineRelations } from "drizzle-orm";
 
-import * as schema from "./schema/index"; // Adjust path to your schema exports
+import * as schema from "./schema/index";
 
 export const relations = defineRelations(schema, r => ({
   location: {
-    // A location belongs to one user
-    user: r.one.user({
-      from: r.location.userId,
-      to: r.user.id,
+    // A location has many location logs (One-to-Many)
+    locationLogs: r.many.locationLog({
+      from: r.location.id,
+      to: r.locationLog.locationId,
+    }),
+  },
+  locationLog: {
+    // 1. A location log belongs to one location
+    location: r.one.location({
+      from: r.locationLog.locationId,
+      to: r.location.id,
     }),
   },
 }));

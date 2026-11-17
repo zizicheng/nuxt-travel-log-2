@@ -1,3 +1,5 @@
+import type { RouteLocationRaw } from "vue-router";
+
 export type LatLongItem = {
   lat: number;
   long: number;
@@ -7,6 +9,9 @@ export type LatLongItem = {
 export type MapPoint = {
   id: number;
   name: string;
+  description: string | null;
+  to?: RouteLocationRaw;
+  toLabel?: string;
 } & LatLongItem;
 
 export type NominatimResult = {
