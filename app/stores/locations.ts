@@ -1,3 +1,5 @@
+import type { MapPoint } from "~/lib/types";
+
 export const useLocationStore = defineStore("useLocationStore", () => {
   const { data, status, refresh } = useFetch("/api/locations", {
     lazy: true,
@@ -10,17 +12,22 @@ export const useLocationStore = defineStore("useLocationStore", () => {
     [data, status],
     ([locations, currentStatus]) => {
       if (locations) {
-        sidebarStore.sidebarItems = locations.map(location => ({
-          id: `location-${location.id}`,
-          label: location.name,
-          icon: "i-tabler:map-pin-filled",
-          to: { name: "dashboard-location-slug", params: {
-            slug: location.slug,
-          } },
-          location,
-        }));
+        const mapPoints: MapPoint[] = [];
+        const sidebarItems: SidebarItem[] = [];
 
-        mapStore.mapPoints = data.value ?? [];
+        locations.forEach((location) => {
+          const mapPoint = createMapPointFromLocation(location);
+          sidebarItems.push({
+            id: `location-${location.id}`,
+            label: location.name,
+            icon: "i-tabler:map-pin-filled",
+            to: { name: "dashboard-location-slug", params: { slug: location.slug } },
+            mapPoint,
+          });
+          mapPoints.push(mapPoint);
+        });
+        sidebarStore.sidebarItems = sidebarItems;
+        mapStore.mapPoints = mapPoints;
       }
 
       sidebarStore.loading = currentStatus === "pending";
