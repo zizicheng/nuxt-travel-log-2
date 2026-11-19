@@ -2,6 +2,8 @@ import { int, real, snakeCase, text, unique } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-orm/zod";
 import { z } from "zod";
 
+import type { SelectLocationLog } from "./location-log";
+
 import { user } from "./auth";
 
 export const location = snakeCase.table(
@@ -37,3 +39,6 @@ export const InsertLocation = createInsertSchema(location, {
 
 export type InsertLocation = z.infer<typeof InsertLocation>;
 export type SelectLocation = typeof location.$inferSelect;
+export type SelectLocationWithLogs = SelectLocation & {
+  locationLogs: SelectLocationLog[];
+};
