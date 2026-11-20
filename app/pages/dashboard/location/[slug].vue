@@ -1,16 +1,22 @@
 <script lang="ts" setup>
-const locationStore = useLocationStore();
+const locationsStore = useLocationStore();
 const route = useRoute();
 const {
   currentLocation: location,
   currentLocationError: error,
   currentLocationStatus: status,
-} = storeToRefs(locationStore);
+} = storeToRefs(locationsStore);
 
 onMounted(async () => {
   if (route.params.slug) {
     await nextTick();
-    locationStore.refreshCurrentLocation();
+    locationsStore.refreshCurrentLocation();
+  }
+});
+
+onBeforeRouteUpdate((to) => {
+  if (to.name === "dashboard-location-slug") {
+    locationsStore.refreshCurrentLocation();
   }
 });
 </script>
@@ -20,7 +26,12 @@ onMounted(async () => {
     <div v-if="status === 'pending'">
       <div class="loading" />
     </div>
-    <div v-if="location && status !== 'pending'">
+    <div v-if="error && status !== 'pending'" class="alert alert-error">
+      <h2 class="text-lg">
+        {{ error.statusText }}
+      </h2>
+    </div>
+    <div v-if="route.name === 'dashboard-location-slug' && location && status !== 'pending'">
       <h2 class="text-xl">
         {{ location.name }}
       </h2>
@@ -37,10 +48,8 @@ onMounted(async () => {
         <Icon name="tabler:map-pin-plus" size="24" />
       </button>
     </div>
-    <div v-if="error && status !== 'pending'" class="alert alert-error">
-      <h2 class="text-lg">
-        {{ error.statusText }}
-      </h2>
+    <div v-if="route.name !== 'dashboard-location-slug'">
+      <NuxtPage />
     </div>
   </div>
 </template>
