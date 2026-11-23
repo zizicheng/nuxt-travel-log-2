@@ -1,6 +1,9 @@
+import type { z } from "zod";
+
 import { int, real, snakeCase, text, unique } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-orm/zod";
-import { z } from "zod";
+
+import { DescriptionSchema, LatSchema, LongSchema, NameSchema } from "~/lib/zod-schema";
 
 import type { SelectLocationLog } from "./location-log";
 
@@ -25,10 +28,10 @@ export const location = snakeCase.table(
 );
 
 export const InsertLocation = createInsertSchema(location, {
-  name: field => field.min(1).max(100),
-  description: field => field.max(1000),
-  lat: z.coerce.number().min(-90).max(90),
-  long: z.coerce.number().min(-180).max(180),
+  name: NameSchema,
+  description: DescriptionSchema,
+  lat: LatSchema,
+  long: LongSchema,
 }).omit({
   id: true,
   slug: true,
