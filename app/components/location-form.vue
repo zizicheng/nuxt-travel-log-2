@@ -31,6 +31,12 @@ const props = defineProps<{
     <AppFormField
       name="name"
       label="Name"
+      :error="errors.name"
+      :disabled="loading"
+    />
+    <AppFormField
+      name="description"
+      label="Description"
       :error="errors.description"
       :disabled="loading"
     />
