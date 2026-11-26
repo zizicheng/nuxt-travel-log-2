@@ -2,7 +2,7 @@
 import type { FetchError } from "ofetch";
 import type { ZodType } from "zod";
 
-import { toTypedSchema } from "@vee-validate/zod";
+import { useForm } from "vee-validate";
 
 import type { LatLongItem, NominatimResult } from "~/lib/types";
 
@@ -25,7 +25,7 @@ const submitted = ref(false);
 const submitError = ref("");
 
 const { handleSubmit, errors, meta, setErrors, setFieldValue, controlledValues } = useForm({
-  validationSchema: toTypedSchema(props.schema),
+  validationSchema: props.schema,
   initialValues: props.initialValues,
 });
 

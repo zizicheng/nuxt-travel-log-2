@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useField } from "vee-validate";
+
 const props = defineProps<{
   label: string;
   name: string;
