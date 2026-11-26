@@ -26,10 +26,10 @@ export default defineAuthenticatedEventHandler(async (event) => {
   const locationLog = await findLocationLog(Number(id), event.context.user.id);
 
   if (!locationLog) {
-    return sendError(event, createError({
+    throw createError({
       statusCode: 404,
       statusMessage: "Location log not found.",
-    }));
+    });
   }
 
   return locationLog;

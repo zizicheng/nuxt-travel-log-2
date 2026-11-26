@@ -92,6 +92,28 @@ watchEffect(() => {
           },
         },
         icon: "i-tabler:arrow-left",
+      }, {
+        id: "link-location-log",
+        label: "View Log",
+        to: {
+          name: "dashboard-location-slug-id",
+          params: {
+            slug: route.params.slug,
+            id: route.params.id,
+          },
+        },
+        icon: "i-tabler:map-pin",
+      }, {
+        id: "link-edit-location-log",
+        label: "Edit Log",
+        to: {
+          name: "dashboard-location-slug-id-edit",
+          params: {
+            slug: route.params.slug,
+            id: route.params.id,
+          },
+        },
+        icon: "i-tabler:map-pin-cog",
       }];
     }
   }
