@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { FetchError } from "ofetch";
 
+import { Field, Form } from "vee-validate";
+
 import type { NominatimResult } from "~/lib/types";
 
 import { SearchSchema } from "~/lib/zod-schemas";
@@ -50,7 +52,7 @@ function setLocation(result: NominatimResult) {
       ref="form"
       v-slot="{ errors }"
       class="flex flex-col gap-2 items-center"
-      :validation-schema="toTypedSchema(SearchSchema)"
+      :validation-schema="SearchSchema"
       :initial-values="{ q: '' }"
       @submit="onSubmit"
     >
